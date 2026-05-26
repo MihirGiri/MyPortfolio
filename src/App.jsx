@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
-// ─── DATA ────────────────────────────────────────────────────────────
 const NAV_LINKS = ["Home","About","Skills","Projects","Experience","Contact"];
 
 const SKILLS = {
@@ -57,7 +56,6 @@ const EXPERIENCE = [
     role: "Web Development Intern",
     period: "Feb 2026 – Apr 2026",
     location: "Jamshedpur, Jharkhand",
-    stack: "MERN Stack",
     points: [
       "Built SwadistChai — full-stack artisan tea e-commerce website",
       "Deployed live production app on Render platform",
@@ -70,7 +68,6 @@ const EXPERIENCE = [
     role: "Web Development Intern",
     period: "Jun 2025 – Sep 2025",
     location: "Jamshedpur, Jharkhand",
-    stack: "ASP.NET",
     points: [
       "Built HealthLive — pharmacy e-commerce web application",
       "Implemented product listings, cart & MySQL database",
@@ -159,30 +156,27 @@ function Navbar(){
     window.addEventListener("scroll",fn);
     return ()=>window.removeEventListener("scroll",fn);
   },[]);
-const scroll=(id)=>{
-  const sectionId = id.toLowerCase() === "experience" 
-    ? "experience" : id.toLowerCase();
-  const el = document.getElementById(sectionId);
-  if(el){
-    el.scrollIntoView({behavior:"smooth"});
-  }
-  setOpen(false);
-};
+
+  const scroll=(id)=>{
+    setOpen(false);
+    setTimeout(()=>{
+      const el=document.getElementById(id.toLowerCase());
+      if(el) el.scrollIntoView({behavior:"smooth"});
+    },300);
+  };
+
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
       style={{background:scrolled?"rgba(10,15,30,0.95)":"transparent",
         backdropFilter:scrolled?"blur(20px)":"none",
         borderBottom:scrolled?"1px solid rgba(0,212,255,0.1)":"none"}}>
       <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
-        {/* Logo */}
         <div className="flex items-center gap-3">
           <img src="/mihir.jpg"
-           style={{width:42, height:42, borderRadius:"50%",
-           border:"2px solid #00d4ff",
-           objectFit:"cover"}}/>
+            style={{width:42,height:42,borderRadius:"50%",
+              border:"2px solid #00d4ff",objectFit:"cover"}}/>
           <span style={{fontFamily:"Poppins",fontWeight:700,color:"#00d4ff",fontSize:18}}>Mihir Giri</span>
         </div>
-        {/* Desktop */}
         <div className="hidden md:flex items-center gap-8">
           {NAV_LINKS.map(l=>(
             <button key={l} onClick={()=>scroll(l)} className="nav-link text-sm font-medium"
@@ -191,40 +185,25 @@ const scroll=(id)=>{
             </button>
           ))}
         </div>
-        {/* Mobile hamburger */}
         <button className="md:hidden" onClick={()=>setOpen(!open)}
           style={{background:"none",border:"none",cursor:"pointer",color:"#00d4ff",fontSize:24}}>
           {open?"✕":"☰"}
         </button>
       </div>
-      {/* Mobile menu */}
       <AnimatePresence>
         {open&&(
           <motion.div initial={{height:0,opacity:0}} animate={{height:"auto",opacity:1}} exit={{height:0,opacity:0}}
             style={{background:"rgba(10,15,30,0.98)",borderBottom:"1px solid rgba(0,212,255,0.1)"}}>
-            <div className="flex flex-col px-6 py-4 gap-4">          
-          {NAV_LINKS.map(l=>(
-            <button key={l}
-              onClick={(e)=>{
-                e.preventDefault();
-                e.stopPropagation();
-                scroll(l);
-              }}
-              style={{
-                fontFamily:"Poppins",
-                color:"#cbd5e1",
-                background:"none",
-                border:"none",
-                cursor:"pointer",
-                textAlign:"left",
-                fontSize:16,
-                fontWeight:500,
-                width:"100%",
-                padding:"8px 0"
-              }}>
-              {l}
-            </button>
-          ))}
+            <div className="flex flex-col px-6 py-4 gap-2">
+              {NAV_LINKS.map(l=>(
+                <button key={l}
+                  onClick={(e)=>{e.stopPropagation();scroll(l);}}
+                  style={{fontFamily:"Poppins",color:"#cbd5e1",background:"none",border:"none",
+                    cursor:"pointer",textAlign:"left",fontSize:16,fontWeight:500,
+                    width:"100%",padding:"10px 0",borderBottom:"1px solid rgba(0,212,255,0.08)"}}>
+                  {l}
+                </button>
+              ))}
             </div>
           </motion.div>
         )}
@@ -240,16 +219,10 @@ function Hero(){
       style={{zIndex:1}}>
       <div className="max-w-3xl mx-auto">
         <motion.div initial={{opacity:0,y:40}} animate={{opacity:1,y:0}} transition={{duration:0.8}}>
-          {/* Avatar placeholder */}
           <img src="/mihir.jpg"
-          style={{width:110, height:110,
-          borderRadius:"50%",
-          border:"3px solid #00d4ff",
-          objectFit:"cover",
-          boxShadow:"0 0 30px rgba(0,212,255,0.3)",
-          margin:"0 auto 20px",
-          display:"block"}}
-        />
+            style={{width:110,height:110,borderRadius:"50%",border:"3px solid #00d4ff",
+              objectFit:"cover",boxShadow:"0 0 30px rgba(0,212,255,0.3)",
+              margin:"0 auto 20px",display:"block"}}/>
           <p style={{color:"#00d4ff",fontFamily:"Poppins",fontWeight:600,letterSpacing:4,
             textTransform:"uppercase",fontSize:13,marginBottom:16}}>
             Hello, I'm
@@ -268,14 +241,14 @@ function Hero(){
             BCA Final Year @ Srinath University &nbsp;|&nbsp; Open to Internships & Full-time Roles
           </p>
           <div className="flex gap-4 justify-center flex-wrap">
-            <button className="btn-primary" onClick={()=>document.getElementById("projects")?.scrollIntoView({behavior:"smooth"})}>
+            <button className="btn-primary"
+              onClick={()=>document.getElementById("projects")?.scrollIntoView({behavior:"smooth"})}>
               View Projects →
             </button>
             <a href="/mihir_resume.pdf" download>
               <button className="btn-outline">⬇ Download Resume</button>
             </a>
           </div>
-          {/* Social */}
           <div className="flex gap-6 justify-center mt-10">
             {[
               {icon:"🐙",label:"GitHub",href:"https://github.com/MihirGiri"},
@@ -295,7 +268,6 @@ function Hero(){
           </div>
         </motion.div>
       </div>
-      {/* Scroll down */}
       <div style={{position:"absolute",bottom:32,left:"50%",transform:"translateX(-50%)",
         color:"#00d4ff",fontSize:13,fontFamily:"Poppins",opacity:0.7,
         display:"flex",flexDirection:"column",alignItems:"center",gap:6}}>
@@ -484,7 +456,6 @@ function Experience(){
           {EXPERIENCE.map((e,i)=>(
             <FadeIn key={i} delay={i*150}>
               <div style={{position:"relative"}}>
-                {/* Dot */}
                 <div style={{position:"absolute",left:-34,top:16,width:16,height:16,
                   borderRadius:"50%",background:"#00d4ff",
                   boxShadow:"0 0 12px rgba(0,212,255,0.6)",border:"3px solid #0a0f1e"}}/>
@@ -546,7 +517,6 @@ function Contact(){
           </div>
         </FadeIn>
         <div className="grid md:grid-cols-2 gap-10">
-          {/* Info */}
           <FadeIn delay={100}>
             <div className="flex flex-col gap-5">
               <p style={{color:"#94a3b8",fontFamily:"Inter",lineHeight:1.9,fontSize:15}}>
@@ -574,7 +544,6 @@ function Contact(){
               ))}
             </div>
           </FadeIn>
-          {/* Form */}
           <FadeIn delay={200}>
             <form onSubmit={handleSubmit} className="glass p-8 flex flex-col gap-5">
               {["name","email","message"].map((f)=>(
