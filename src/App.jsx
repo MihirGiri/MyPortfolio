@@ -159,10 +159,15 @@ function Navbar(){
     window.addEventListener("scroll",fn);
     return ()=>window.removeEventListener("scroll",fn);
   },[]);
-  const scroll=(id)=>{
-    document.getElementById(id.toLowerCase())?.scrollIntoView({behavior:"smooth"});
-    setOpen(false);
-  };
+const scroll=(id)=>{
+  const sectionId = id.toLowerCase() === "experience" 
+    ? "experience" : id.toLowerCase();
+  const el = document.getElementById(sectionId);
+  if(el){
+    el.scrollIntoView({behavior:"smooth"});
+  }
+  setOpen(false);
+};
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
       style={{background:scrolled?"rgba(10,15,30,0.95)":"transparent",
@@ -197,14 +202,29 @@ function Navbar(){
         {open&&(
           <motion.div initial={{height:0,opacity:0}} animate={{height:"auto",opacity:1}} exit={{height:0,opacity:0}}
             style={{background:"rgba(10,15,30,0.98)",borderBottom:"1px solid rgba(0,212,255,0.1)"}}>
-            <div className="flex flex-col px-6 py-4 gap-4">
-              {NAV_LINKS.map(l=>(
-                <button key={l} onClick={()=>scroll(l)}
-                  style={{fontFamily:"Poppins",color:"#cbd5e1",background:"none",border:"none",cursor:"pointer",
-                    textAlign:"left",fontSize:16,fontWeight:500}}>
-                  {l}
-                </button>
-              ))}
+            <div className="flex flex-col px-6 py-4 gap-4">          
+          {NAV_LINKS.map(l=>(
+            <button key={l}
+              onClick={(e)=>{
+                e.preventDefault();
+                e.stopPropagation();
+                scroll(l);
+              }}
+              style={{
+                fontFamily:"Poppins",
+                color:"#cbd5e1",
+                background:"none",
+                border:"none",
+                cursor:"pointer",
+                textAlign:"left",
+                fontSize:16,
+                fontWeight:500,
+                width:"100%",
+                padding:"8px 0"
+              }}>
+              {l}
+            </button>
+          ))}
             </div>
           </motion.div>
         )}
