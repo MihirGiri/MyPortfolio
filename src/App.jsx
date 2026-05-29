@@ -172,10 +172,10 @@ function Navbar(){
         borderBottom:scrolled?"1px solid rgba(0,212,255,0.1)":"none"}}>
       <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <img src="/mihir.jpg"
+          {/* <img src="/mihir.jpg"
             style={{width:42,height:42,borderRadius:"50%",
-              border:"2px solid #00d4ff",objectFit:"cover"}}/>
-          <span style={{fontFamily:"Poppins",fontWeight:700,color:"#00d4ff",fontSize:18}}>Mihir Giri</span>
+              border:"2px solid #00d4ff",objectFit:"cover"}}/> */}
+          <span style={{fontFamily:"Poppins",fontWeight:700,color:"#00d4ff",fontSize:18}}>Mihir's Portfolio</span>
         </div>
         <div className="hidden md:flex items-center gap-8">
           {NAV_LINKS.map(l=>(
